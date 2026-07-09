@@ -1,0 +1,28 @@
+{% if total == 0 %}
+  <p class="muted">No results yet. Run a scan to check your inbox.</p>
+{% else %}
+  <div class="summary">
+    <strong>{{ flagged|length }}</strong> flagged &middot;
+    <strong>{{ safe_count }}</strong> looked safe &middot;
+    {{ total }} scanned
+  </div>
+
+  {% if flagged %}
+    <ul class="result-list">
+      {% for r in flagged %}
+      <li class="result risk-{{ r.risk }}">
+        <a href="/results/{{ r.id }}">
+          <span class="badge badge-{{ r.risk }}">{{ r.risk|upper }}</span>
+          <span class="result-main">
+            <span class="result-subject">{{ r.subject or "(no subject)" }}</span>
+            <span class="result-from">{{ r.from_name or r.from_address }}</span>
+          </span>
+          <span class="result-score">{{ r.score|round(0)|int }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="all-clear">✅ Nothing suspicious in the messages we scanned.</p>
+  {% endif %}
+{% endif %}

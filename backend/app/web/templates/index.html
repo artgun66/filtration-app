@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Filtration — Check your inbox for fraud{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Spot fraudulent emails before they get you.</h1>
+  <p class="lead">
+    Filtration scans your Gmail inbox and flags phishing, scams, and spoofed
+    senders — with a clear explanation for every warning.
+  </p>
+  <a class="btn btn-primary" href="/auth/login">Connect Gmail &amp; scan</a>
+  <p class="fineprint">
+    Read-only access. We analyze messages to score them and store only the
+    verdict and basic details — never the contents of your emails.
+    See our <a href="/privacy">privacy policy</a>.
+  </p>
+</section>
+
+<section class="cards">
+  <div class="card"><h3>🔎 Rules first</h3><p>Fast local checks for spoofed domains, bad links, and failed email authentication.</p></div>
+  <div class="card"><h3>🤖 AI when needed</h3><p>Ambiguous messages get a second look from an AI security analyst.</p></div>
+  <div class="card"><h3>🧾 Clear reasons</h3><p>Every flag comes with plain-language red flags and a recommended action.</p></div>
+</section>
+{% endblock %}

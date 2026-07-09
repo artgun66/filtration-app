@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{{ r.subject or "Email" }} — Filtration{% endblock %}
+{% block nav %}
+<nav class="nav"><a class="nav-link" href="/dashboard">← Back</a></nav>
+{% endblock %}
+{% block content %}
+<article class="detail">
+  <div class="detail-head risk-{{ r.risk }}">
+    <span class="badge badge-{{ r.risk }}">{{ r.risk|upper }}</span>
+    <span class="detail-score">Risk score {{ r.score|round(0)|int }}/100</span>
+    <span class="detail-cat">{{ r.category }}</span>
+  </div>
+
+  <h1 class="detail-subject">{{ r.subject or "(no subject)" }}</h1>
+  <p class="detail-meta">
+    From <strong>{{ r.from_name }}</strong>
+    &lt;{{ r.from_address }}&gt;{% if r.email_date %} · {{ r.email_date }}{% endif %}
+  </p>
+
+  <div class="action">
+    <h2>Recommended action</h2>
+    <p>{{ r.recommended_action }}</p>
+  </div>
+
+  <div class="flags">
+    <h2>Why it was flagged</h2>
+    {% if reasons %}
+      <ul>{% for reason in reasons %}<li>{{ reason }}</li>{% endfor %}</ul>
+    {% else %}
+      <p class="muted">No specific signals were recorded.</p>
+    {% endif %}
+  </div>
+
+  {% if r.used_llm %}<p class="fineprint">This message was reviewed by AI analysis.</p>{% endif %}
+</article>
+{% endblock %}

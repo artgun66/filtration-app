@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — Filtration{% endblock %}
+{% block nav %}
+<nav class="nav">
+  <span class="nav-email">{{ user.email }}</span>
+  <a class="nav-link" href="/auth/logout">Sign out</a>
+</nav>
+{% endblock %}
+{% block content %}
+<section class="scanbar">
+  <form hx-post="/scan" hx-target="#results" hx-swap="innerHTML"
+        hx-indicator="#spinner" hx-disabled-elt="find button">
+    <label class="count">
+      Scan the latest
+      <select name="limit">
+        <option value="10">10</option>
+        <option value="25" selected>25</option>
+        <option value="50">50</option>
+      </select>
+      emails
+    </label>
+    <button class="btn btn-primary" type="submit">Scan inbox</button>
+    <span id="spinner" class="htmx-indicator">Scanning…</span>
+  </form>
+</section>
+
+<section id="results"
+         hx-get="/results" hx-trigger="load" hx-swap="innerHTML">
+  <p class="muted">Loading previous results…</p>
+</section>
+{% endblock %}

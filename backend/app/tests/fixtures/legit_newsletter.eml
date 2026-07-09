@@ -1,0 +1,11 @@
+From: "GitHub" <noreply@github.com>
+To: dev@example.com
+Subject: Your weekly digest
+Date: Mon, 06 Jul 2026 12:00:00 +0000
+Authentication-Results: mx.google.com; spf=pass smtp.mailfrom=github.com; dkim=pass; dmarc=pass
+Content-Type: text/html
+
+<html><body>
+<p>Here is a summary of activity in your repositories this week.</p>
+<p><a href="https://github.com/notifications">View your notifications</a></p>
+</body></html>
