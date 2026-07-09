@@ -9,12 +9,19 @@ from __future__ import annotations
 import base64
 import hashlib
 import json
+import os
+
+# Google frequently returns granted scopes in a different order (and adds/derives
+# "openid"), which otherwise makes oauthlib raise a spurious scope-change error.
+os.environ.setdefault("OAUTHLIB_RELAX_TOKEN_SCOPE", "1")
 
 from cryptography.fernet import Fernet
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow
 
 from ..config import get_settings
+
+GMAIL_READONLY_SCOPE = "https://www.googleapis.com/auth/gmail.readonly"
 
 
 def _fernet() -> Fernet:
@@ -76,18 +83,25 @@ def build_flow(state: str | None = None) -> Flow:
     return flow
 
 
-def authorization_url() -> tuple[str, str]:
-    """Return (url, state). We request offline access so we get a refresh token."""
+def authorization_url() -> tuple[str, str, str]:
+    """Return (url, state, code_verifier). We request offline access so we get a
+    refresh token. The flow auto-generates a PKCE code_verifier that must be
+    carried over to the callback for the token exchange to succeed.
+    """
     flow = build_flow()
     url, state = flow.authorization_url(
         access_type="offline",
         include_granted_scopes="true",
         prompt="consent",
     )
-    return url, state
+    return url, state, flow.code_verifier
 
 
-def exchange_code(code: str, state: str) -> Credentials:
+def exchange_code(code: str, state: str, code_verifier: str | None = None) -> Credentials:
     flow = build_flow(state=state)
+    # Restore the PKCE verifier generated during the login request so the token
+    # endpoint accepts the exchange (otherwise: "Missing code verifier").
+    if code_verifier:
+        flow.code_verifier = code_verifier
     flow.fetch_token(code=code)
     return flow.credentials

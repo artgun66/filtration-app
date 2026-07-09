@@ -15,7 +15,17 @@
       "Bash(git config *)",
       "Bash(git init *)",
       "Bash(git add *)",
-      "Bash(grep -iE \"\\\\.env$|\\\\.env\\\\b|filtration\\\\.db|\\\\.venv\")"
+      "Bash(grep -iE \"\\\\.env$|\\\\.env\\\\b|filtration\\\\.db|\\\\.venv\")",
+      "Bash(git branch *)",
+      "Bash(git commit -q -m ' *)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(curl -s -o /dev/null -w \"status: %{http_code}\\\\n\" http://127.0.0.1:8000/)",
+      "Bash(curl -s -i http://127.0.0.1:8000/auth/login)",
+      "Bash(curl -s -o /dev/null -w \"home page status: %{http_code}\\\\n\" http://127.0.0.1:8000/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:8000/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" -I http://127.0.0.1:8000/auth/login)",
+      "Bash(curl -s -o /dev/null -w \"home: %{http_code}\\\\n\" http://127.0.0.1:8000/)"
     ]
   }
 }

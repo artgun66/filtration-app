@@ -12,12 +12,10 @@
         hx-indicator="#spinner" hx-disabled-elt="find button">
     <label class="count">
       Scan the latest
-      <select name="limit">
-        <option value="10">10</option>
-        <option value="25" selected>25</option>
-        <option value="50">50</option>
-      </select>
+      <input type="number" name="limit" value="25" min="1" max="200" step="1"
+             inputmode="numeric" aria-label="Number of emails to scan" />
       emails
+      <small class="muted">(1–200)</small>
     </label>
     <button class="btn btn-primary" type="submit">Scan inbox</button>
     <span id="spinner" class="htmx-indicator">Scanning…</span>

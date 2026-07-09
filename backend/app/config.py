@@ -28,6 +28,9 @@ class Settings(BaseSettings):
     llm_escalate_low: int = 30
     llm_escalate_high: int = 70
     scan_default_limit: int = 25
+    scan_max_limit: int = 200  # hard cap on how many emails one scan will fetch
+    # Timezone email timestamps are displayed in (IANA name).
+    display_timezone: str = "America/Los_Angeles"
     llm_enabled: bool = True
     # Which backend answers the ambiguous mid-band: "anthropic" (paid Claude API)
     # or "ollama" (a free model running locally, e.g. Gemma). Both return the same

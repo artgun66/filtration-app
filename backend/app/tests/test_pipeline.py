@@ -90,6 +90,7 @@ def test_llm_failure_degrades_to_rules(monkeypatch):
 
 def test_no_api_key_skips_llm(monkeypatch):
     monkeypatch.setenv("LLM_ENABLED", "true")
+    monkeypatch.setenv("LLM_PROVIDER", "anthropic")  # this path is anthropic-specific
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     monkeypatch.setenv("LLM_ESCALATE_LOW", "0")
     monkeypatch.setenv("LLM_ESCALATE_HIGH", "100")

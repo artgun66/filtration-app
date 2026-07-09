@@ -21,6 +21,7 @@ dependencies = [
     "beautifulsoup4>=4.12",
     "tldextract>=5.1",
     "rapidfuzz>=3.9",
+    "tzdata>=2024.1",
 ]
 
 [project.optional-dependencies]

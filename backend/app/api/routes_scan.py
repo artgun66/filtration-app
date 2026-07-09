@@ -12,6 +12,7 @@ from ..config import get_settings
 from ..detection import pipeline
 from ..storage import models
 from ..storage.db import get_db
+from ..web.format import format_email_date
 from ..web.templates import templates
 
 logger = logging.getLogger(__name__)
@@ -39,6 +40,8 @@ def scan(
 
     settings = get_settings()
     n = limit or settings.scan_default_limit
+    # Keep it sane: at least 1, never more than the configured cap.
+    n = max(1, min(n, settings.scan_max_limit))
 
     creds = _credentials_for(user, db)
     client = GmailClient(creds)
@@ -69,7 +72,7 @@ def scan(
                 from_name=email.from_name[:320],
                 from_address=email.from_address[:320],
                 subject=email.subject[:998],
-                email_date=email.date[:128],
+                email_date=format_email_date(email.date)[:128],
                 score=verdict.score,
                 risk=verdict.risk.value,
                 category=verdict.category.value,
